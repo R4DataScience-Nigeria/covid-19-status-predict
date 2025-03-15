@@ -106,53 +106,26 @@ tracking_df <- read_parquet('path/to/covid_tracking.parquet')
 ### Bing COVID-19 Data
 
 ``` r
-# Convert date column to Date type
-bing_df <- bing_df %>%
-  mutate(date = as.Date(date))
+ibrary(arrow)
+library(dplyr)
+library(naniar)
+library(tidyverse)
 
-# Handle missing values
-bing_df <- bing_df %>%
-  filter(!is.na(confirmed) & !is.na(deaths) & !is.na(recovered))
-```
-
-### COVID Policy Tracker
-
-``` r
-# Convert date column to Date type
-policy_df <- policy_df %>%
-  mutate(date = as.Date(date))
-
-# Handle missing values
-policy_df <- policy_df %>%
-  filter(!is.na(confirmedcases) & !is.na(confirmeddeaths))
-```
-
-### ECDC COVID-19 Cases
-
-``` r
-# Convert date column to Date type
-ecdc_df <- ecdc_df %>%
-  mutate(date = as.Date(date))
-
-# Handle missing values
-ecdc_df <- ecdc_df %>%
-  filter(!is.na(cases) & !is.na(deaths))
-```
-
-### COVID Tracking Project
-
-``` r
-# Convert date column to Date type
-tracking_df <- tracking_df %>%
-  mutate(date = as.Date(date))
-
-# Handle missing values
-tracking_df <- tracking_df %>%
-  filter(!is.na(positive) & !is.na(negative) & !is.na(hospitalized) & !is.na(death))
+#Reading in the dataset
+bing_covid <- read_parquet("data/bing_covid-19_data.parquet")
+  
+#Exploring dataset
+str(bing_covid)
+#Checing for missing value 
+missing_per_column <- colSums(is.na(bing_covid))
+View(missing_per_column)  
+gg_miss_var(bing_covid)  
+  
+#Removing missing varibles
+bing_covid <- bing_covid %>%
+                drop_na()
 ```
 
 # Conclusion
 
-This documentation provides an overview of the datasets and the data cleaning process in R. The cleaned data will be used to build a predictive model to analyze and forecast COVID-19 outcomes. Further data processing and model building will be done in subsequent steps. \`\`\`
-
-You can copy this content into a `.qmd` file for your project. If you need any further assistance or have any questions, feel free to ask!
+This documentation provides an overview of the datasets and the data cleaning process in R. The cleaned data will be used to build a predictive model to analyze and forecast COVID-19 outcomes. Further data processing and model building will be done in subsequent steps
