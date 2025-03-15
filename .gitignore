@@ -1,0 +1,8 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.data/bing_covid-19_data.parquet
+.data/covid_policy_tracker.parquet
+.data/covid_tracking.parquet
+.data/ecdc_cases.parquet
